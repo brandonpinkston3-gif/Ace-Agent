@@ -1,4 +1,3 @@
-
 name: Build Ace Agent APK
 
 on:
@@ -17,6 +16,12 @@ jobs:
       - name: Get project
         uses: actions/checkout@v4
 
+      - name: Install Java
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '17'
+
       - name: Install Android SDK
         uses: android-actions/setup-android@v4
         with:
@@ -25,14 +30,10 @@ jobs:
             platforms;android-35
             build-tools;35.0.0
 
-      - name: Install Android SDK
-        uses: android-actions/setup-android@v4
-
-      - name: Install Android components
-        run: sdkmanager "platforms;android-35" "build-tools;35.0.0"
-
-      - name: Install Android components
-        run: sdkmanager "platforms;android-35" "build-tools;35.0.0"
+      - name: Install Gradle
+        uses: gradle/actions/setup-gradle@v6
+        with:
+          gradle-version: '8.9'
 
       - name: Build APK
         run: gradle assembleDebug
