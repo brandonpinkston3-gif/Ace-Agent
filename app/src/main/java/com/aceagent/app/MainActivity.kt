@@ -41,7 +41,13 @@ class MainActivity : Activity() {
         }
 
         scroll = ScrollView(this)
-        scroll.addView(chat)
+scroll.addView(
+    chat,
+    ScrollView.LayoutParams(
+        ViewGroup.LayoutParams.MATCH_PARENT,
+        ViewGroup.LayoutParams.WRAP_CONTENT
+    )
+)
 
         message = EditText(this).apply {
             hint = "Tell Ace what to do..."
@@ -51,17 +57,23 @@ class MainActivity : Activity() {
         }
 
         val send = Button(this).apply {
-            text = "SEND"
-            setOnClickListener {
-                val command = message.text.toString().trim()
+    text = "SEND"
 
-                if (command.isNotEmpty()) {
-                    chat.append("\n\nYou: $command")
-                    message.text.clear()
-                    runCommand(command)
-                }
+    setOnClickListener {
+        val command = message.text.toString().trim()
+
+        if (command.isNotEmpty()) {
+            chat.append("\n\nYou: $command")
+            message.text.clear()
+
+            runCommand(command)
+
+            scroll.post {
+                scroll.fullScroll(ScrollView.FOCUS_DOWN)
             }
         }
+    }
+}
 
         layout.addView(title)
 
