@@ -17,11 +17,13 @@ jobs:
       - name: Get project
         uses: actions/checkout@v4
 
-      - name: Install Java
-        uses: actions/setup-java@v4
+      - name: Install Android SDK
+        uses: android-actions/setup-android@v4
         with:
-          distribution: temurin
-          java-version: '17'
+          packages: |
+            platform-tools
+            platforms;android-35
+            build-tools;35.0.0
 
       - name: Install Android SDK
         uses: android-actions/setup-android@v4
